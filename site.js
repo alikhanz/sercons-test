@@ -25,11 +25,20 @@ var categoriesLoader = function(container) {
  * @type {{}}
  */
 categoriesLoader.prototype = {
+    /**
+     * Initialize elements
+     *
+     * @return void
+     */
     init: function() {
         this.elements.innerContinaer = this.elements.container.find(this.selectors.innerContainer);
         this.elements.button = this.elements.container.find(this.selectors.button);
-        this.entryLevel = 0;
     },
+    /**
+     * Bind dom-events
+     *
+     * @return void
+     */
     bindEvents: function() {
         var self = this;
 
@@ -43,24 +52,31 @@ categoriesLoader.prototype = {
                 });
         });
     },
+    /**
+     * Render categories
+     *
+     * @param categories
+     * @returns {string}
+     */
     renderCategories: function(categories) {
-        var html = '';
+        var html = '<ul>';
         var self = this;
 
         $.each(categories, function(i, category){
-            var preName = Array(self.entryLevel + 1).join('--');
-            html += '<li>'+ preName + category['name'] + '</li>';
+            html += '<li>' + category['name'] + '</li>';
 
             if (category['children'] && category['children'].length > 0) {
                 self.entryLevel++;
                 html += self.renderCategories(category['children']);
                 self.entryLevel--;
             }
+
         });
+
+        html += '</ul>';
 
         return html;
     }
 };
-
 
 new categoriesLoader($('.js-categories-loader'));
