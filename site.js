@@ -66,9 +66,7 @@ categoriesLoader.prototype = {
             html += '<li>' + category['name'] + '</li>';
 
             if (category['children'] && category['children'].length > 0) {
-                self.entryLevel++;
                 html += self.renderCategories(category['children']);
-                self.entryLevel--;
             }
 
         });
